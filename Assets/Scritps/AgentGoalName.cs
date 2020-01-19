@@ -1,6 +1,11 @@
 ﻿public static class AgentGoalName
 {
-    public const string TreatPatient = "treatPatient";
+    //Patient
     public const string IsWaiting = "isWaiting";
     public const string IsTreated = "isTreated";
+    public const string IsHome = "isHome";
+
+    //Nurse
+    public const string TreatPatient = "treatPatient";
+    public const string Rested = "rested";
 }

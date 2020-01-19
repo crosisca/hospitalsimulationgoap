@@ -10,7 +10,7 @@
         GWorld.Instance.GetWorld().ModifyState(WorldStateName.PatientWaiting, 1);
         GWorld.Instance.AddPatient(this.gameObject);//agent.gameObj
 
-        beliefs.ModifyState(AgentStateName.AtHospital, 1);
+        beliefs.ModifyState(AgentBeliefs.AtHospital, 1);
 
         return true;
     }

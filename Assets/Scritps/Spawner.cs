@@ -12,12 +12,18 @@ public class Spawner : MonoBehaviour
             Instantiate(patientPrefab, transform.position, Quaternion.identity);
         }
 
-        Invoke("SpawnPatient", 5);
+        //Invoke("SpawnPatient", 5);
     }
 
     void SpawnPatient()
     {
         Instantiate(patientPrefab, transform.position, Quaternion.identity);
         Invoke("SpawnPatient", Random.Range(2, 10));
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+            Instantiate(patientPrefab, transform.position, Quaternion.identity);
     }
 }
