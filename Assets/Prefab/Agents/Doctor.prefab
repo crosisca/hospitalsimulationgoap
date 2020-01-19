@@ -898,6 +898,8 @@ GameObject:
   - component: {fileID: 8327582070137963074}
   - component: {fileID: -1377485896697981856}
   - component: {fileID: 8407569792630551950}
+  - component: {fileID: 1679670701316965538}
+  - component: {fileID: 2425483034205443039}
   m_Layer: 0
   m_Name: Doctor
   m_TagString: Untagged
@@ -994,6 +996,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisAgent: {fileID: 8327582070137963074}
+--- !u!114 &1679670701316965538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671204384365253142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9c58af04b1178f4182f079d2cedc36d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Action
+  cost: 1
+  target: {fileID: 0}
+  targetTag: Office
+  duration: 5
+  preConditions:
+  - key: FreeOffice
+    value: 0
+  afterEffects:
+  - key: research
+    value: 0
+  agent: {fileID: 0}
+  running: 0
+--- !u!114 &2425483034205443039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671204384365253142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2830ea750c6977d4296fdd70ee88e32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Action
+  cost: 1
+  target: {fileID: 0}
+  targetTag: Toilet
+  duration: 5
+  preConditions:
+  - key: FreeToilet
+    value: 0
+  - key: busting
+    value: 0
+  afterEffects:
+  - key: relief
+    value: 0
+  agent: {fileID: 0}
+  running: 0
 --- !u!1 &4744062337369676505
 GameObject:
   m_ObjectHideFlags: 0

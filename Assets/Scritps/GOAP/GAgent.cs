@@ -28,6 +28,8 @@ public class GAgent : MonoBehaviour
     public GAction currentAction;
     SubGoal currentGoal;
 
+    Vector3 destination = Vector3.zero;
+
     public void Start ()
     {
         GAction[] acts = this.GetComponents<GAction>();
@@ -49,9 +51,8 @@ public class GAgent : MonoBehaviour
     {
         if (currentAction != null && currentAction.running)
         {
-            float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
-            //HACK comentei o hasPath pq tava bugando
-            if (/*currentAction.agent.hasPath && */distanceToTarget < 2f)//currentAction.agent.remainingDistance < 1f
+            float distanceToTarget = Vector3.Distance(destination, this.transform.position);
+            if (distanceToTarget < 2f)//currentAction.agent.remainingDistance < 1f
             {
                 if (!invoked)
                 {
@@ -100,7 +101,14 @@ public class GAgent : MonoBehaviour
                 if (currentAction.target != null)
                 {
                     currentAction.running = true;
-                    currentAction.agent.SetDestination(currentAction.target.transform.position);
+
+                    destination = currentAction.target.transform.position;
+
+                    Transform dest = currentAction.target.transform.Find("Destination");
+                    if (dest != null)
+                        destination = dest.position;
+
+                    currentAction.agent.SetDestination(destination);
                 }
             }
             else

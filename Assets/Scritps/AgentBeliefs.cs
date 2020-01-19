@@ -4,6 +4,8 @@
     public const string AtHospital = "atHospital";
     public const string IsCured = "isCured";
 
-    //Nurse
+    //Misc
     public static string Exhausted = "exhausted";
+
+    public static string Busting = "busting";
 }

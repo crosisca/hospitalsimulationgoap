@@ -4,6 +4,7 @@ public class Spawner : MonoBehaviour
 {
     public GameObject patientPrefab;
     public int numPatients;
+    public bool keepSpawning = false;
 
     void Start()
     {
@@ -12,7 +13,8 @@ public class Spawner : MonoBehaviour
             Instantiate(patientPrefab, transform.position, Quaternion.identity);
         }
 
-        //Invoke("SpawnPatient", 5);
+        if(keepSpawning)
+            Invoke("SpawnPatient", 5);
     }
 
     void SpawnPatient()
