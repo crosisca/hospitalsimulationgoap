@@ -988,7 +988,7 @@ MonoBehaviour:
   cost: 1
   target: {fileID: 0}
   targetTag: 
-  duration: 3
+  duration: 8
   preConditions:
   - key: gotPatient
     value: 0
