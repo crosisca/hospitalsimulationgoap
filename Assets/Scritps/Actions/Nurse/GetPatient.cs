@@ -6,17 +6,17 @@ public class GetPatient : GAction
 
     public override bool PrePerform ()
     {
-        target = GWorld.Instance.RemovePatient();
+        target = GWorld.Instance.GetQueue(ResourceType.Patients).RemoveResource();
 
         if (target == null)
             return false;
 
-        resource = GWorld.Instance.RemoveCubicle();
+        resource = GWorld.Instance.GetQueue(ResourceType.Cubicles).RemoveResource();
         if (resource != null)
             inventory.AddItem(resource);
         else
         {
-            GWorld.Instance.AddPatient(target);//if theres no free cubicle, release the patient (add it back to world)
+            GWorld.Instance.GetQueue(ResourceType.Patients).AddResource(target);//if theres no free cubicle, release the patient (add it back to world)
             target = null;
         }
 

@@ -8,7 +8,7 @@
     public override bool PostPerform()
     {
         GWorld.Instance.GetWorld().ModifyState(WorldStateName.PatientWaiting, 1);
-        GWorld.Instance.AddPatient(this.gameObject);//agent.gameObj
+        GWorld.Instance.GetQueue(ResourceType.Patients).AddResource(this.gameObject);//agent.gameObj
 
         beliefs.ModifyState(AgentBeliefs.AtHospital, 1);
 

@@ -6,44 +6,42 @@ public sealed class GWorld
 {
     public static GWorld Instance { get; } = new GWorld();
     static WorldStates world;
-    static Queue<GameObject> patients;
-    static Queue<GameObject> cubicles;
-    static Queue<GameObject> offices;
-    static Queue<GameObject> toilets;
+    static ResourceQueue patients;
+    static ResourceQueue cubicles;
+    static ResourceQueue offices;
+    static ResourceQueue toilets;
+    static ResourceQueue puddles;
+
+
+    /// <summary>
+    /// string = ResourceType
+    /// </summary>
+    static Dictionary<string, ResourceQueue> resources = new Dictionary<string, ResourceQueue>();
 
     static GWorld()
     {
         world = new WorldStates();
-        patients = new Queue<GameObject>();
-        cubicles = new Queue<GameObject>();
-        offices = new Queue<GameObject>();
-        toilets = new Queue<GameObject>();
+        patients = new ResourceQueue("","", world);
+        resources.Add(ResourceType.Patients, patients);
 
-        //Cubicles
-        GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cubicle");
-        foreach (GameObject cubicle in cubes)
-            cubicles.Enqueue(cubicle);
+        cubicles = new ResourceQueue(ObjectTag.Cubicle, WorldStateName.FreeCubicle, world);
+        resources.Add(ResourceType.Cubicles, cubicles);
 
-        if(cubes.Length > 0)
-            world.ModifyState(WorldStateName.FreeCubicle, cubes.Length);
+        offices = new ResourceQueue(ObjectTag.Office, WorldStateName.FreeOffice, world);
+        resources.Add(ResourceType.Offices, offices);
 
-        //Offices
-        GameObject[] offs = GameObject.FindGameObjectsWithTag("Office");
-        foreach (GameObject ofc in offs)
-            offices.Enqueue(ofc);
+        toilets = new ResourceQueue(ObjectTag.Toilet, WorldStateName.FreeToilet, world);
+        resources.Add(ResourceType.Toilets, toilets);
 
-        if (offs.Length > 0)
-            world.ModifyState(WorldStateName.FreeOffice, offs.Length);
-
-        //Toilets
-        GameObject[] toilts = GameObject.FindGameObjectsWithTag("Toilet");
-        foreach (GameObject ofc in toilts)
-            toilets.Enqueue(ofc);
-
-        if (toilts.Length > 0)
-            world.ModifyState(WorldStateName.FreeToilet, toilts.Length);
+        puddles = new ResourceQueue(ObjectTag.Puddle, WorldStateName.FreePuddle, world);
+        resources.Add(ResourceType.Puddles, puddles);
 
         Time.timeScale = 5;
+    }
+
+    public ResourceQueue GetQueue(string type)
+    {
+        return resources[type];
     }
 
     private GWorld()
@@ -54,57 +52,5 @@ public sealed class GWorld
     public WorldStates GetWorld()
     {
         return world;
-    }
-
-    public void AddPatient (GameObject patient)
-    {
-        patients.Enqueue(patient);
-    }
-
-    public GameObject RemovePatient ()
-    {
-        if (patients.Count <= 0)
-            return null;
-
-        return patients.Dequeue();
-    }
-
-    public void AddCubicle (GameObject cubicle)
-    {
-        cubicles.Enqueue(cubicle);
-    }
-
-    public GameObject RemoveCubicle ()
-    {
-        if (cubicles.Count <= 0)
-            return null;
-
-        return cubicles.Dequeue();
-    }
-
-    public void AddOffice (GameObject office)
-    {
-        offices.Enqueue(office);
-    }
-
-    public GameObject RemoveOffice ()
-    {
-        if (offices.Count <= 0)
-            return null;
-
-        return offices.Dequeue();
-    }
-
-    public void AddToilet (GameObject toilet)
-    {
-        toilets.Enqueue(toilet);
-    }
-
-    public GameObject RemoveToilet ()
-    {
-        if (toilets.Count <= 0)
-            return null;
-
-        return toilets.Dequeue();
     }
 }

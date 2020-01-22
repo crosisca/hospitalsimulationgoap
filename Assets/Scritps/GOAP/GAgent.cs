@@ -67,8 +67,8 @@ public class GAgent : MonoBehaviour
         {
             planner = new GPlanner();
 
-            IOrderedEnumerable<KeyValuePair<SubGoal, int>> sortedGoals = from entry in goals orderby entry.Value descending select entry;
-            IOrderedEnumerable<KeyValuePair<SubGoal, int>> sortGoals = goals.OrderByDescending(x => x.Value);
+            //IOrderedEnumerable<KeyValuePair<SubGoal, int>> sortedGoals = from entry in goals orderby entry.Value descending select entry;
+            IOrderedEnumerable<KeyValuePair<SubGoal, int>> sortedGoals = goals.OrderByDescending(x => x.Value);
 
             foreach (KeyValuePair<SubGoal, int> subGoal in sortedGoals)
             {

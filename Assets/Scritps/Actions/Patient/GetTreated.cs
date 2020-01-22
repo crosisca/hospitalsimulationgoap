@@ -2,7 +2,7 @@
 {
     public override bool PrePerform()
     {
-        target = inventory.FindItemWithTag("Cubicle");
+        target = inventory.FindItemWithTag(ObjectTag.Cubicle);
 
         if (target == null)
             return false;

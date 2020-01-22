@@ -11,6 +11,10 @@
     //Doctor
     public static string Research = "research";
 
+    //Janitor
+    public static string Clean = "clean";
+
+
     //Misc
     public const string Rested = "rested";
     public const string Relief = "relief";

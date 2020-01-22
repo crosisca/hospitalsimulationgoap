@@ -2,7 +2,7 @@
 {
     public override bool PrePerform ()
     {
-        target = GWorld.Instance.RemoveToilet();
+        target = GWorld.Instance.GetQueue(ResourceType.Toilets).RemoveResource();
         if (target == null)
             return false;
 
@@ -15,7 +15,7 @@
 
     public override bool PostPerform ()
     {
-        GWorld.Instance.AddToilet(target);
+        GWorld.Instance.GetQueue(ResourceType.Toilets).AddResource(target);
         inventory.RemoveItem(target);
         GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, 1);
 

@@ -887,6 +887,7 @@ GameObject:
   - component: {fileID: 1279922576420306656}
   - component: {fileID: 1431540646}
   - component: {fileID: 2445560253065658330}
+  - component: {fileID: 1487796572}
   m_Layer: 0
   m_Name: Nurse
   m_TagString: Untagged
@@ -1062,6 +1063,26 @@ MonoBehaviour:
     value: 0
   agent: {fileID: 0}
   running: 0
+--- !u!114 &1487796572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5957345213792346999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cfe51289fac32499d72bc6a4f3471f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: busting
+  stateStrength: 10
+  stateDecayRate: 2
+  resourcePrefab: {fileID: 1625109968861542130, guid: 2f67e1b06640349c7a33a29963d525ff,
+    type: 3}
+  queueName: puddles
+  worldState: FreePuddle
+  action: {fileID: 2445560253065658330}
 --- !u!1 &6264937546708142162
 GameObject:
   m_ObjectHideFlags: 0

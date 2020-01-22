@@ -49,7 +49,7 @@ public class GPlanner
 
         if (!success)
         {
-            Debug.Log("NO PLAN");
+            //Debug.Log("NO PLAN");
             return null;
         }
 
@@ -80,11 +80,11 @@ public class GPlanner
             queue.Enqueue(action);
         }
 
-        Debug.Log("The Plan is: ");
-        foreach (GAction action in queue)
-        {
-            Debug.Log($"Q: {action.actionName}");
-        }
+        //Debug.Log("The Plan is: ");
+        //foreach (GAction action in queue)
+        //{
+        //    Debug.Log($"Q: {action.actionName}");
+        //}
 
         return queue;
     }

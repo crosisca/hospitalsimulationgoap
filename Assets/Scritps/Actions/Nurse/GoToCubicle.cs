@@ -2,7 +2,7 @@
 {
     public override bool PrePerform ()
     {
-        target = inventory.FindItemWithTag("Cubicle");
+        target = inventory.FindItemWithTag(ObjectTag.Cubicle);
 
         if (target == null)
             return false;
@@ -13,13 +13,13 @@
 
     public override bool PostPerform ()
     {
-        GWorld.Instance.AddCubicle(target);//return cubicle to world
+        GWorld.Instance.GetWorld().ModifyState(WorldStateName.TreatingPatient, -1);
+
+        GWorld.Instance.GetQueue(ResourceType.Cubicles).AddResource(target);//return cubicle to world
 
         inventory.RemoveItem(target);//cubicle
 
         GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeCubicle, 1);
-
-        GWorld.Instance.GetWorld().ModifyState(WorldStateName.TreatingPatient, -1);
 
         return true;
     }

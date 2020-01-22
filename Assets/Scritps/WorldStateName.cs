@@ -6,4 +6,5 @@
     public static string TreatingPatient = "TreatingPatient";
     public static string FreeOffice = "FreeOffice";
     public static string FreeToilet = "FreeToilet";
+    public static string FreePuddle = "FreePuddle";
 }

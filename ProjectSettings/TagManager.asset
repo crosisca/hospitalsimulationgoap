@@ -12,6 +12,7 @@ TagManager:
   - Reception
   - Office
   - Toilet
+  - Puddle
   layers:
   - Default
   - TransparentFX
