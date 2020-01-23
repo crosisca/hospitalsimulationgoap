@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ResourceQueue
 {
@@ -29,6 +30,11 @@ public class ResourceQueue
     public void AddResource(GameObject resource)
     {
         queue.Enqueue(resource);
+    }
+
+    public void RemoveResource (GameObject resource)
+    {
+        queue = new Queue<GameObject>(queue.Where(x => x != resource));
     }
 
     public GameObject RemoveResource()

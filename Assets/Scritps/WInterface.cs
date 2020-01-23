@@ -16,10 +16,22 @@ public class WInterface : MonoBehaviour
     Vector3 clickOffset = Vector3.zero;
     bool offsetCalc = false;
 
+    bool deleteResource = false;
+
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public void MouseOnHoverTrash()
+    {
+        deleteResource = true;
+    }
+
+    public void MouseOutHoverTrash()
+    {
+        deleteResource = false;
     }
 
     // Update is called once per frame
@@ -31,6 +43,9 @@ public class WInterface : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out hit))
                 return;
+
+            offsetCalc = false;
+            clickOffset = Vector3.zero;
 
             if (hit.transform.gameObject.tag == ObjectTag.Toilet)
             {
@@ -47,14 +62,21 @@ public class WInterface : MonoBehaviour
         }
         else if (focusObj && Input.GetMouseButtonUp(0))
         {
-            focusObj.transform.parent = hospital.transform;
+            if (deleteResource)
+            {
+                GWorld.Instance.GetQueue(ResourceType.Toilets).RemoveResource(focusObj);//TODO hard-coded
+                GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, -1);
+                Destroy(focusObj);
+            }
+            else
+            {
+                focusObj.transform.parent = hospital.transform;
+                GWorld.Instance.GetQueue(ResourceType.Toilets).AddResource(focusObj);//TODO hard-coded
+                GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, 1);
+                focusObj.GetComponent<Collider>().enabled = true;
+            }
+
             surface.BuildNavMesh();
-
-            GWorld.Instance.GetQueue(ResourceType.Toilets).AddResource(focusObj);//TODO hard-coded
-            GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, 1);
-
-            focusObj.GetComponent<Collider>().enabled = true;
-
             focusObj = null;
         }
         else if (focusObj && Input.GetMouseButton(0))
@@ -64,7 +86,13 @@ public class WInterface : MonoBehaviour
             if (!Physics.Raycast(rayMove, out hitMove))
                 return;
 
-            goalPos = hitMove.point;
+            if (!offsetCalc)
+            {
+                clickOffset = hitMove.point - focusObj.transform.position;
+                offsetCalc = true;
+            }
+
+            goalPos = hitMove.point - clickOffset;
             focusObj.transform.position = goalPos;
         }
 
