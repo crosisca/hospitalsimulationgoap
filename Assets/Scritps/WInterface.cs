@@ -13,6 +13,9 @@ public class WInterface : MonoBehaviour
     public NavMeshSurface surface;
     public GameObject hospital;
 
+    Vector3 clickOffset = Vector3.zero;
+    bool offsetCalc = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +32,18 @@ public class WInterface : MonoBehaviour
             if (!Physics.Raycast(ray, out hit))
                 return;
 
-            goalPos = hit.point;
+            if (hit.transform.gameObject.tag == ObjectTag.Toilet)
+            {
+                focusObj = hit.transform.gameObject;
+            }
+            else
+            {
+                goalPos = hit.point;
 
-            focusObj = Instantiate(newResourcePrefab, goalPos, newResourcePrefab.transform.rotation);
+                focusObj = Instantiate(newResourcePrefab, goalPos, newResourcePrefab.transform.rotation);
+            }
+
+            focusObj.GetComponent<Collider>().enabled = false;
         }
         else if (focusObj && Input.GetMouseButtonUp(0))
         {
@@ -40,6 +52,8 @@ public class WInterface : MonoBehaviour
 
             GWorld.Instance.GetQueue(ResourceType.Toilets).AddResource(focusObj);//TODO hard-coded
             GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, 1);
+
+            focusObj.GetComponent<Collider>().enabled = true;
 
             focusObj = null;
         }
@@ -53,5 +67,10 @@ public class WInterface : MonoBehaviour
             goalPos = hitMove.point;
             focusObj.transform.position = goalPos;
         }
+
+        if (focusObj && Input.GetKeyDown(KeyCode.Less) || Input.GetKeyDown(KeyCode.Comma))
+            focusObj.transform.Rotate(0, 90, 0);
+        else if (focusObj && Input.GetKeyDown(KeyCode.Greater) || Input.GetKeyDown(KeyCode.Period))
+            focusObj.transform.Rotate(0, -90, 0);
     }
 }
