@@ -6,7 +6,11 @@ using UnityEngine.AI;
 public class WInterface : MonoBehaviour
 {
     GameObject focusObj;
-    public GameObject newResourcePrefab;
+    ResourceData focusObjData;
+
+
+    GameObject newResourcePrefab;
+    public GameObject[] allResources;
 
     Vector3 goalPos;
 
@@ -34,6 +38,11 @@ public class WInterface : MonoBehaviour
         deleteResource = false;
     }
 
+    public void ActivateToilet()
+    {
+        newResourcePrefab = allResources[0];
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -47,32 +56,37 @@ public class WInterface : MonoBehaviour
             offsetCalc = false;
             clickOffset = Vector3.zero;
 
-            if (hit.transform.gameObject.tag == ObjectTag.Toilet)
+            Resource r = hit.transform.GetComponent<Resource>();
+            
+            if (r != null)
             {
                 focusObj = hit.transform.gameObject;
+                focusObjData = r.info;
             }
-            else
+            else if(newResourcePrefab != null)
             {
                 goalPos = hit.point;
 
                 focusObj = Instantiate(newResourcePrefab, goalPos, newResourcePrefab.transform.rotation);
+                focusObjData = focusObj.GetComponent<Resource>().info;
             }
 
-            focusObj.GetComponent<Collider>().enabled = false;
+            if(focusObj)
+                focusObj.GetComponent<Collider>().enabled = false;
         }
         else if (focusObj && Input.GetMouseButtonUp(0))
         {
             if (deleteResource)
             {
-                GWorld.Instance.GetQueue(ResourceType.Toilets).RemoveResource(focusObj);//TODO hard-coded
-                GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, -1);
+                GWorld.Instance.GetQueue(focusObjData.resourceQueue).RemoveResource(focusObj);
+                GWorld.Instance.GetWorld().ModifyState(focusObjData.resourceState, -1);
                 Destroy(focusObj);
             }
             else
             {
                 focusObj.transform.parent = hospital.transform;
-                GWorld.Instance.GetQueue(ResourceType.Toilets).AddResource(focusObj);//TODO hard-coded
-                GWorld.Instance.GetWorld().ModifyState(WorldStateName.FreeToilet, 1);
+                GWorld.Instance.GetQueue(focusObjData.resourceQueue).AddResource(focusObj);
+                GWorld.Instance.GetWorld().ModifyState(focusObjData.resourceState, 1);
                 focusObj.GetComponent<Collider>().enabled = true;
             }
 
