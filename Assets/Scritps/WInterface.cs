@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class WInterface : MonoBehaviour
 {
@@ -43,11 +44,19 @@ public class WInterface : MonoBehaviour
         newResourcePrefab = allResources[0];
     }
 
+    public void ActivateCubicle ()
+    {
+        newResourcePrefab = allResources[1];
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out hit))
@@ -95,9 +104,12 @@ public class WInterface : MonoBehaviour
         }
         else if (focusObj && Input.GetMouseButton(0))
         {
+            //int layerMask = 1 << 8;//8 = floor
+            int layerMask = LayerMask.GetMask("Floor");
+
             RaycastHit hitMove;
             Ray rayMove = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(rayMove, out hitMove))
+            if (!Physics.Raycast(rayMove, out hitMove, Mathf.Infinity, layerMask))
                 return;
 
             if (!offsetCalc)
